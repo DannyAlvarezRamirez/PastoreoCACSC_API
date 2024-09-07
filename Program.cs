@@ -45,7 +45,7 @@ builder.Services.AddSingleton<IPasswordService, PasswordService>();
 
 // Register DbContext
 builder.Services.AddDbContext<PastoreoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 
 builder.Services.AddControllers();
 
