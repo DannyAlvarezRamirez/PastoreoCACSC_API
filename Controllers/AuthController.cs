@@ -13,7 +13,7 @@ public class AuthController : ControllerBase
     public AuthController(PastoreoContext context, IPasswordService passwordService, IJwtTokenService jwtTokenService)
     {
         _context = context;
-        _passwordService = passwordService;
+        _passwordService = passwordService; 
         _jwtTokenService = jwtTokenService;
     }
 
