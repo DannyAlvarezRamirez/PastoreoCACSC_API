@@ -6,15 +6,15 @@ using PastoreoCACSC_API.Models;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly JwtTokenService _jwtTokenService;
     private readonly PastoreoContext _context;
-    private readonly PasswordService _passwordService;
+    private readonly IPasswordService _passwordService;
+    private readonly IJwtTokenService _jwtTokenService;
 
-    public AuthController(JwtTokenService jwtTokenService, PastoreoContext context, PasswordService passwordService)
+    public AuthController(PastoreoContext context, IPasswordService passwordService, IJwtTokenService jwtTokenService)
     {
-        _jwtTokenService = jwtTokenService;
         _context = context;
         _passwordService = passwordService;
+        _jwtTokenService = jwtTokenService;
     }
 
     [HttpPost("login")]

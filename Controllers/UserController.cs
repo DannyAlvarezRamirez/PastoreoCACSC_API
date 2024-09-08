@@ -11,9 +11,9 @@ namespace PastoreoCACSC_API.Controllers
     public class UserController : ControllerBase
     {
         private readonly PastoreoContext _context;
-        private readonly PasswordService _passwordService;
+        private readonly IPasswordService _passwordService;
 
-        public UserController(PastoreoContext context, PasswordService passwordService)
+        public UserController(PastoreoContext context, IPasswordService passwordService)
         {
             _context = context;
             _passwordService = passwordService;
