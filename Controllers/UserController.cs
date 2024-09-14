@@ -5,7 +5,7 @@ using PastoreoCACSC_API.Classes;
 
 namespace PastoreoCACSC_API.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -27,7 +27,7 @@ namespace PastoreoCACSC_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
+        public IActionResult GetUserById(decimal id)
         {
             var user = _context.Tbammaeusuarios.Find(id);
             if (user == null)
