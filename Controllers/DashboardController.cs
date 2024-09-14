@@ -43,7 +43,7 @@ namespace PastoreoCACSC_API.Controllers
                 return StatusCode(500, response); // Return server error if something goes wrong
             }
 
-            return Ok(response); // Return success response with data
+            return Ok(response); // Return success response with data 
         }
     }
 }
