@@ -87,7 +87,7 @@ namespace PastoreoCACSC_API.Controllers
 
             try
             {
-                _context.Tbamdetganados.Add(ganado);
+                _context.Tbamdetganados.Add(ganado); 
                 _context.SaveChanges();
 
                 response.Data.Add(ganado);
