@@ -7,8 +7,8 @@ namespace PastoreoCACSC_API.Models
     {
         public Tbammaeusuario()
         {
-            TbamcatalertasConfiguracions = new HashSet<TbamcatalertasConfiguracion>();
-            Tbammaenotificaciones = new HashSet<Tbammaenotificacione>();
+            TbamcatalertasConfigs = new HashSet<TbamcatalertasConfig>();
+            Tbammaenotificacions = new HashSet<Tbammaenotificacion>();
             Tbammaereportes = new HashSet<Tbammaereporte>();
             TbamrelsistUsuarios = new HashSet<TbamrelsistUsuario>();
         }
@@ -31,8 +31,8 @@ namespace PastoreoCACSC_API.Models
         public string? ModificadoPor { get; set; }
         public DateTime? FechaModificacion { get; set; }
 
-        public virtual ICollection<TbamcatalertasConfiguracion> TbamcatalertasConfiguracions { get; set; }
-        public virtual ICollection<Tbammaenotificacione> Tbammaenotificaciones { get; set; }
+        public virtual ICollection<TbamcatalertasConfig> TbamcatalertasConfigs { get; set; }
+        public virtual ICollection<Tbammaenotificacion> Tbammaenotificacions { get; set; }
         public virtual ICollection<Tbammaereporte> Tbammaereportes { get; set; }
         public virtual ICollection<TbamrelsistUsuario> TbamrelsistUsuarios { get; set; }
     }

@@ -16,68 +16,68 @@ namespace PastoreoCACSC_API.Controllers
             _context = context;
         }
 
-        // POST: api/Ganado/search
-        [HttpPost("search")]
-        public IActionResult SearchGanado([FromBody] GanadoFilterRequest filters)
-        {
-            var response = new ApiResponse();
+        //// POST: api/Ganado/search
+        //[HttpPost("search")]
+        //public IActionResult SearchGanado([FromBody] GanadoFilterRequest filters)
+        //{
+        //    var response = new ApiResponse();
 
-            try
-            {
-                // Start by querying the Ganado table
-                var query = _context.Tbamdetganados.AsQueryable();
+        //    try
+        //    {
+        //        // Start by querying the Ganado table
+        //        var query = _context.Tbamdetganados.AsQueryable();
 
-                // Apply filters if they are present
+        //        // Apply filters if they are present
 
-                if (!string.IsNullOrEmpty(filters.Raza))
-                    query = query.Where(g => g.Raza == filters.Raza);
+        //        if (!string.IsNullOrEmpty(filters.Raza))
+        //            query = query.Where(g => g.Raza == filters.Raza);
 
-                if (filters.Peso.HasValue)
-                    query = query.Where(g => g.Peso == filters.Peso.Value);
+        //        if (filters.Peso.HasValue)
+        //            query = query.Where(g => g.Peso == filters.Peso.Value);
 
-                if (!string.IsNullOrEmpty(filters.Sexo))
-                    query = query.Where(g => g.Sexo == filters.Sexo);
+        //        if (!string.IsNullOrEmpty(filters.Sexo))
+        //            query = query.Where(g => g.Sexo == filters.Sexo);
 
-                if (filters.Edad.HasValue)
-                    query = query.Where(g => g.Edad == filters.Edad.Value);
+        //        if (filters.Edad.HasValue)
+        //            query = query.Where(g => g.Edad == filters.Edad.Value);
 
-                if (!string.IsNullOrEmpty(filters.EstadoSalud))
-                    query = query.Where(g => g.EstadoSalud == filters.EstadoSalud);
+        //        if (!string.IsNullOrEmpty(filters.EstadoSalud))
+        //            query = query.Where(g => g.EstadoSalud == filters.EstadoSalud);
 
-                if (filters.FechaChequeo.HasValue)
-                    query = query.Where(g => g.FechaChequeo.Date == filters.FechaChequeo.Value.Date);
+        //        if (filters.FechaChequeo.HasValue)
+        //            query = query.Where(g => g.FechaChequeo.Date == filters.FechaChequeo.Value.Date);
 
-                if (!string.IsNullOrEmpty(filters.Productividad))
-                    query = query.Where(g => g.Productividad == filters.Productividad);
+        //        if (!string.IsNullOrEmpty(filters.Productividad))
+        //            query = query.Where(g => g.Productividad == filters.Productividad);
 
-                if (!string.IsNullOrEmpty(filters.Tratamientos))
-                    query = query.Where(g => g.Tratamientos == filters.Tratamientos);
+        //        if (!string.IsNullOrEmpty(filters.Tratamientos))
+        //            query = query.Where(g => g.Tratamientos == filters.Tratamientos);
 
-                if (filters.FechaNacimiento.HasValue)
-                    query = query.Where(g => g.FechaNacimiento.Date == filters.FechaNacimiento.Value.Date);
+        //        if (filters.FechaNacimiento.HasValue)
+        //            query = query.Where(g => g.FechaNacimiento.Date == filters.FechaNacimiento.Value.Date);
 
-                // Execute the query and get the filtered list of Ganado
-                var ganadoList = query.ToList();
+        //        // Execute the query and get the filtered list of Ganado
+        //        var ganadoList = query.ToList();
 
-                // If no results, set a "no results found" response
-                if (ganadoList.Count == 0)
-                {
-                    response.SetResponse(true, ExitCode.Success, "No se encontraron resultados.");
-                }
-                else
-                {
-                    response.Data.AddRange(ganadoList);
-                    response.SetResponse(true, ExitCode.Success, "Resultados de búsqueda de ganado obtenidos correctamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                response.SetResponse(false, ExitCode.ErrorServer, "Error retrieving Ganado search results.", ex.Message);
-                return StatusCode(500, response);
-            }
+        //        // If no results, set a "no results found" response
+        //        if (ganadoList.Count == 0)
+        //        {
+        //            response.SetResponse(true, ExitCode.Success, "No se encontraron resultados.");
+        //        }
+        //        else
+        //        {
+        //            response.Data.AddRange(ganadoList);
+        //            response.SetResponse(true, ExitCode.Success, "Resultados de búsqueda de ganado obtenidos correctamente.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.SetResponse(false, ExitCode.ErrorServer, "Error retrieving Ganado search results.", ex.Message);
+        //        return StatusCode(500, response);
+        //    }
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
         // POST: api/Ganado/create
         [HttpPost("create")]

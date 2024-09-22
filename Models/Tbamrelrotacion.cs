@@ -21,6 +21,6 @@ namespace PastoreoCACSC_API.Models
         public string? ModificadoPor { get; set; }
         public DateTime? FechaModificacion { get; set; }
 
-        public virtual Tbamdetapartamento Apartamento { get; set; } = null!;
+        public virtual Tbammaeapartamento Apartamento { get; set; } = null!;
     }
 }

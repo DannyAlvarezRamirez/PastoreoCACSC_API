@@ -3,12 +3,14 @@ using System.Collections.Generic;
 
 namespace PastoreoCACSC_API.Models
 {
-    public partial class TbamcatalertasConfiguracion
+    public partial class Tbammaenotificacion
     {
-        public decimal AlertaId { get; set; }
+        public decimal NotificacionId { get; set; }
         public decimal UsuarioId { get; set; }
-        public string TipoAlerta { get; set; } = null!;
-        public string Configuracion { get; set; } = null!;
+        public string TipoNotificacion { get; set; } = null!;
+        public string Mensaje { get; set; } = null!;
+        public DateTime FechaEnvio { get; set; }
+        public string? Prioridad { get; set; }
         public string CreadoPor { get; set; } = null!;
         public DateTime FechaCreacion { get; set; }
         public string? ModificadoPor { get; set; }
