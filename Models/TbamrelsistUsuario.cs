@@ -12,7 +12,7 @@ namespace PastoreoCACSC_API.Models
         public string CreadoPor { get; set; } = null!;
         public DateTime FechaCreacion { get; set; }
         public string? ModificadoPor { get; set; }
-        public DateTime? FechaModificacion { get; set; }
+        public DateTime? FechaModif { get; set; }
 
         public virtual Tbamdetrole Rol { get; set; } = null!;
         public virtual Tbammaeusuario Usuario { get; set; } = null!;

@@ -43,6 +43,7 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<Tbammaeusuario> Tbammaeusuarios { get; set; } = null!;
         public virtual DbSet<Tbamrelrotacion> Tbamrelrotacions { get; set; } = null!;
         public virtual DbSet<TbamrelsistUsuario> TbamrelsistUsuarios { get; set; } = null!;
+        public virtual DbSet<GanadoReport> SpamselReporteGanado { get; set; } // Mapping the stored procedure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -428,7 +429,7 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.FechaNacimiento).HasColumnType("date");
 
-                entity.Property(e => e.FechaUltimoChequeo).HasColumnType("date");
+                entity.Property(e => e.UltimoChequeo).HasColumnType("date");
 
                 entity.Property(e => e.ModificadoPor).HasMaxLength(20);
 
@@ -589,7 +590,7 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.CreadoPor).HasMaxLength(20);
 
-                entity.Property(e => e.EficienciaPastoreo).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.EficPast).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.ModificadoPor).HasMaxLength(20);
 
@@ -633,6 +634,8 @@ namespace PastoreoCACSC_API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__TBCMRELSi__Usuar__5CD6CB2B");
             });
+
+            modelBuilder.Entity<GanadoReport>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }

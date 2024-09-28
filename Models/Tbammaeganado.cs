@@ -11,14 +11,14 @@ namespace PastoreoCACSC_API.Models
         public decimal? SexoId { get; set; }
         public int? Edad { get; set; }
         public decimal? EstadoSaludId { get; set; }
-        public DateTime? FechaUltimoChequeo { get; set; }
+        public DateTime? UltimoChequeo { get; set; }
         public decimal? ProductividadId { get; set; }
         public decimal? TratamientoId { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public string CreadoPor { get; set; } = null!;
         public DateTime FechaCreacion { get; set; }
         public string? ModificadoPor { get; set; }
-        public DateTime? FechaModificacion { get; set; }
+        public DateTime? FechaModif { get; set; }
 
         public virtual TbamdetestadoSalud? EstadoSalud { get; set; }
         public virtual Tbamdetproductividad? Productividad { get; set; }

@@ -24,12 +24,12 @@ namespace PastoreoCACSC_API.Controllers
             try
             {
                 // Assuming "Cantidad de Ganado" comes from a 'Ganado' table, summing or counting the records
-                var cantidadGanado = _context.Tbamdetganados.Count();
+                var cantidadGanado = _context.Tbammaeganados.Count();
 
                 // Assuming "Estado del Pastoreo" comes from a 'Pastoreo' table, querying the current status
                 var estadoPastoreo = _context.Tbamrelrotacions
                     .OrderByDescending(p => p.FechaCreacion)
-                    .Select(p => p.EficienciaPastoreo)
+                    .Select(p => p.EficPast)
                     .FirstOrDefault(); // Assuming 'Estado' is a string field representing the status
 
                 // Prepare the response data

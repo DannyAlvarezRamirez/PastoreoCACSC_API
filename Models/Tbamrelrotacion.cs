@@ -14,12 +14,12 @@ namespace PastoreoCACSC_API.Models
         public int? CantidadMaximaRecomendada { get; set; }
         public string? TipoGanado { get; set; }
         public string? RegistroEventos { get; set; }
-        public decimal? EficienciaPastoreo { get; set; }
+        public decimal? EficPast { get; set; }
         public string? Observaciones { get; set; }
         public string CreadoPor { get; set; } = null!;
         public DateTime FechaCreacion { get; set; }
         public string? ModificadoPor { get; set; }
-        public DateTime? FechaModificacion { get; set; }
+        public DateTime? FechaModif { get; set; }
 
         public virtual Tbammaeapartamento Apartamento { get; set; } = null!;
     }
