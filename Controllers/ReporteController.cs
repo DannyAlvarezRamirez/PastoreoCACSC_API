@@ -48,7 +48,7 @@ namespace PastoreoCACSC_API.Controllers
                             Edad = g.Edad,
                             SexoId = g.SexoId,
                             FechaCreacion = g.FechaCreacion
-                        }).ToList();
+                        }).ToList(); 
 
                         response.Data.Add(ganadoList.Count > 0 ? ganadoList : new List<GanadoReport>());
                         break;
