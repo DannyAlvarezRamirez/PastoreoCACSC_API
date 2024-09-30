@@ -2,16 +2,16 @@
 {
     public class GanadoReport
     {
-        public int GanadoId { get; set; }
-        public int RazaId { get; set; }
+        public decimal GanadoId { get; set; }
+        public decimal RazaId { get; set; }
         public decimal Peso { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public int TratamientoId { get; set; }
-        public int ProductividadId { get; set; }
+        public decimal TratamientoId { get; set; }
+        public decimal ProductividadId { get; set; }
         public DateTime UltimoChequeo { get; set; }
-        public int EstadoSaludId { get; set; }
+        public decimal EstadoSaludId { get; set; }
         public int Edad { get; set; }
-        public int SexoId { get; set; }
+        public decimal SexoId { get; set; }
         public DateTime FechaCreacion { get; set; }
     }
 }

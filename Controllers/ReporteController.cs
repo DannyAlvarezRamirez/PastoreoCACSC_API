@@ -24,18 +24,17 @@ namespace PastoreoCACSC_API.Controllers
 
             try
             {
-                // Execute the stored procedure based on the registerType (ganado, suministro, departamento)
-                var reportData = _context.SpamselReporteGanado
-                    .FromSqlInterpolated(
-                        $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
-                    )
-                    .ToList();
-
                 // Handle different register types and map to appropriate response format
                 switch (request.RegisterType.ToLower())
                 {
                     case "ganado":
-                        var ganadoList = reportData.Select(g => new GanadoReport
+                        var ganado = _context.SpamselReporteGanado
+                        .FromSqlInterpolated(
+                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                        )
+                        .ToList();
+
+                        var ganadoList = ganado.Select(g => new GanadoReport
                         {
                             GanadoId = g.GanadoId,
                             RazaId = g.RazaId,
@@ -53,16 +52,46 @@ namespace PastoreoCACSC_API.Controllers
                         response.Data.Add(ganadoList.Count > 0 ? ganadoList : new List<GanadoReport>());
                         break;
 
-                    case "suministro":
-                        // Logic to handle suministro when added to the stored procedure
-                        response.SetResponse(false, ExitCode.ErrorNotFound, "Suministro report type not yet implemented.");
-                        return Ok(response);
+                    case "suministros":
+                        var suministros = _context.SpamselReporteSuministros
+                        .FromSqlInterpolated(
+                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                        )
+                        .ToList();
 
-                    case "departamento":
-                        // Logic to handle departamento when added to the stored procedure
-                        response.SetResponse(false, ExitCode.ErrorNotFound, "Departamento report type not yet implemented.");
-                        return Ok(response);
+                        var suministroList = suministros.Select(s => new SuministrosReport
+                        {
+                            SuministroId = s.SuministroId,
+                            Cantidad = s.Cantidad,
+                            Descripcion = s.Descripcion,
+                            TipoSuministro = s.TipoSuministro,
+                            FechaCreacion = s.FechaCreacion
+                        }).ToList();
 
+                        response.Data.Add(suministroList.Count > 0 ? suministroList : new List<SuministrosReport>());
+                        break;
+                    case "apartamentos":
+                        var apartamentos = _context.SpamselReporteApartamentos
+                        .FromSqlInterpolated(
+                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                        )
+                        .ToList();
+
+                        var apartamentosList = apartamentos.Select(a => new ApartamentosReport
+                        {
+                            ApartamentoId = a.ApartamentoId,
+                            TamanoArea = a.TamanoArea,
+                            TipoPastoId = a.TipoPastoId,
+                            TipoTierraId = a.TipoTierraId,
+                            ExpoSolarId = a.ExpoSolarId,
+                            DrenajeId = a.DrenajeId,
+                            CapaCargaId = a.CapaCargaId,
+                            FrecuenciaUsoId = a.FrecuenciaUsoId,
+                            FechaCreacion = a.FechaCreacion
+                        }).ToList();
+
+                        response.Data.Add(apartamentosList.Count > 0 ? apartamentosList : new List<ApartamentosReport>());
+                        break;
                     default:
                         response.SetResponse(false, ExitCode.ErrorInvalidRequest, "Invalid registerType specified.");
                         return BadRequest(response);
