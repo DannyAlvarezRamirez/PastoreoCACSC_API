@@ -32,7 +32,7 @@ namespace PastoreoCACSC_API.Controllers
                         .FromSqlInterpolated(
                             $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
                         )
-                        .ToList();
+                        .ToList(); 
 
                         var ganadoList = ganado.Select(g => new GanadoReport
                         {
