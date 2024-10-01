@@ -46,6 +46,7 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<GanadoReport> SpamselReporteGanado { get; set; } // Mapping the stored procedure
         public virtual DbSet<SuministrosReport> SpamselReporteSuministros { get; set; } // Mapping the stored procedure
         public virtual DbSet<ApartamentosReport> SpamselReporteApartamentos { get; set; } // Mapping the stored procedure
+        public virtual DbSet<GanadoSearchResult> SpamselGanado { get; set; } // Mapping the stored procedure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -640,6 +641,7 @@ namespace PastoreoCACSC_API.Models
             modelBuilder.Entity<GanadoReport>().HasNoKey();
             modelBuilder.Entity<SuministrosReport>().HasNoKey();
             modelBuilder.Entity<ApartamentosReport>().HasNoKey();
+            modelBuilder.Entity<GanadoSearchResult>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }

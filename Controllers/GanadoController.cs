@@ -25,40 +25,12 @@ namespace PastoreoCACSC_API.Controllers
 
             try
             {
-                // Start by querying the Ganado table
-                var query = _context.Tbammaeganados.AsQueryable();
-
-                // Apply filters if they are present
-
-                if (filters.RazaId.HasValue)
-                    query = query.Where(g => g.RazaId == filters.RazaId);
-
-                if (filters.Peso.HasValue)
-                    query = query.Where(g => g.Peso == filters.Peso.Value);
-
-                if (filters.SexoId.HasValue)
-                    query = query.Where(g => g.SexoId == filters.SexoId);
-
-                if (filters.Edad.HasValue)
-                    query = query.Where(g => g.Edad == filters.Edad.Value);
-
-                if (filters.EstadoSaludId.HasValue)
-                    query = query.Where(g => g.EstadoSaludId == filters.EstadoSaludId);
-
-                if (filters.FechaChequeo.HasValue)
-                    query = query.Where(g => g.UltimoChequeo == filters.FechaChequeo.Value.Date);
-
-                if (filters.ProductividadId.HasValue)
-                    query = query.Where(g => g.ProductividadId == filters.ProductividadId);
-
-                if (filters.TratamientosId.HasValue)
-                    query = query.Where(g => g.TratamientoId == filters.TratamientosId);
-
-                if (filters.FechaNacimiento.HasValue)
-                    query = query.Where(g => g.FechaNacimiento == filters.FechaNacimiento.Value.Date);
-
-                // Execute the query and get the filtered list of Ganado
-                var ganadoList = query.ToList();
+                // Execute the stored procedure with the provided filters
+                var ganadoList = _context.SpamselGanado
+                    .FromSqlInterpolated(
+                        $"EXEC dbo.SPAMSELGanado @RazaId = {filters.RazaId}, @Peso = {filters.Peso}, @SexoId = {filters.SexoId}, @Edad = {filters.Edad}, @EstadoSaludId = {filters.EstadoSaludId}, @UltimoChequeo = {filters.FechaChequeo}, @ProductividadId = {filters.ProductividadId}, @TratamientoId = {filters.TratamientosId}, @FechaNacimiento = {filters.FechaNacimiento}"
+                    )
+                    .ToList();
 
                 // If no results, set a "no results found" response
                 if (ganadoList.Count == 0)
@@ -79,6 +51,7 @@ namespace PastoreoCACSC_API.Controllers
 
             return Ok(response);
         }
+
 
         // POST: api/Ganado/create
         [HttpPost("create")]

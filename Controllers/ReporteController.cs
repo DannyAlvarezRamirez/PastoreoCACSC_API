@@ -30,7 +30,7 @@ namespace PastoreoCACSC_API.Controllers
                     case "ganado":
                         var ganado = _context.SpamselReporteGanado
                         .FromSqlInterpolated(
-                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                            $"EXEC dbo.SPAMSELReporte @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
                         )
                         .ToList(); 
 
@@ -55,7 +55,7 @@ namespace PastoreoCACSC_API.Controllers
                     case "suministros":
                         var suministros = _context.SpamselReporteSuministros
                         .FromSqlInterpolated(
-                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                            $"EXEC dbo.SPAMSELReporte @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
                         )
                         .ToList();
 
@@ -73,7 +73,7 @@ namespace PastoreoCACSC_API.Controllers
                     case "apartamentos":
                         var apartamentos = _context.SpamselReporteApartamentos
                         .FromSqlInterpolated(
-                            $"EXEC dbo.SPAMSELReporteGanado @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                            $"EXEC dbo.SPAMSELReporte @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
                         )
                         .ToList();
 
