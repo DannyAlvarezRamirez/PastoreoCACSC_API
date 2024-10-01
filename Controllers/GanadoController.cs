@@ -25,7 +25,7 @@ namespace PastoreoCACSC_API.Controllers
 
             try
             {
-                // Execute the stored procedure with the provided filters
+                // Execute the stored procedure with the provided filters 
                 var ganadoList = _context.SpamselGanado
                     .FromSqlInterpolated(
                         $"EXEC dbo.SPAMSELGanado @RazaId = {filters.RazaId}, @Peso = {filters.Peso}, @SexoId = {filters.SexoId}, @Edad = {filters.Edad}, @EstadoSaludId = {filters.EstadoSaludId}, @UltimoChequeo = {filters.FechaChequeo}, @ProductividadId = {filters.ProductividadId}, @TratamientoId = {filters.TratamientosId}, @FechaNacimiento = {filters.FechaNacimiento}"
