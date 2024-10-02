@@ -73,7 +73,7 @@ namespace PastoreoCACSC_API.Controllers
                             @UltimoChequeo = {newGanado.UltimoChequeo},
                             @ProductividadId = {newGanado.ProductividadId},
                             @TratamientoId = {newGanado.TratamientoId},
-                            @FechaNacimiento = {newGanado.FechaNacimiento},
+                            @FechaNacimiento = {newGanado.FechaNacimiento}, 
                             @CreadoPor = {newGanado.CreadoPor}
                     ")
                     .AsEnumerable() // Retrieve the inserted Ganado ID from the result set
