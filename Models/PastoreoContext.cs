@@ -43,10 +43,12 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<Tbammaeusuario> Tbammaeusuarios { get; set; } = null!;
         public virtual DbSet<Tbamrelrotacion> Tbamrelrotacions { get; set; } = null!;
         public virtual DbSet<TbamrelsistUsuario> TbamrelsistUsuarios { get; set; } = null!;
-        public virtual DbSet<GanadoReport> SpamselReporteGanado { get; set; } // Mapping the stored procedure
+        public virtual DbSet<GanadoReport> SpamslReporteGanado { get; set; } // Mapping the stored procedure
         public virtual DbSet<SuministrosReport> SpamselReporteSuministros { get; set; } // Mapping the stored procedure
         public virtual DbSet<ApartamentosReport> SpamselReporteApartamentos { get; set; } // Mapping the stored procedure
-        public virtual DbSet<GanadoSearchResult> SpamselGanado { get; set; } // Mapping the stored procedure
+        public virtual DbSet<GanadoSearchResult> SpamslGanado { get; set; } // Mapping the stored procedure
+        public virtual DbSet<GanadoUpdateRequest> SpamupGanado { get; set; } // Mapping the stored procedure
+        public virtual DbSet<GanadoCreateRequest> SpaminGanado { get; set; } // Mapping the stored procedure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -446,25 +448,25 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TratamientoId).HasColumnType("numeric(18, 0)");
 
-                entity.HasOne(d => d.EstadoSalud)
-                    .WithMany(p => p.Tbammaeganados)
-                    .HasForeignKey(d => d.EstadoSaludId);
+                //entity.HasOne(d => d.EstadoSalud)
+                //    .WithMany(p => p.Tbammaeganados)
+                //    .HasForeignKey(d => d.EstadoSaludId);
 
-                entity.HasOne(d => d.Productividad)
-                    .WithMany(p => p.Tbammaeganados)
-                    .HasForeignKey(d => d.ProductividadId);
+                //entity.HasOne(d => d.Productividad)
+                //    .WithMany(p => p.Tbammaeganados)
+                //    .HasForeignKey(d => d.ProductividadId);
 
-                entity.HasOne(d => d.Raza)
-                    .WithMany(p => p.Tbammaeganados)
-                    .HasForeignKey(d => d.RazaId);
+                //entity.HasOne(d => d.Raza)
+                //    .WithMany(p => p.Tbammaeganados)
+                //    .HasForeignKey(d => d.RazaId);
 
-                entity.HasOne(d => d.Sexo)
-                    .WithMany(p => p.Tbammaeganados)
-                    .HasForeignKey(d => d.SexoId);
+                //entity.HasOne(d => d.Sexo)
+                //    .WithMany(p => p.Tbammaeganados)
+                //    .HasForeignKey(d => d.SexoId);
 
-                entity.HasOne(d => d.Tratamiento)
-                    .WithMany(p => p.Tbammaeganados)
-                    .HasForeignKey(d => d.TratamientoId);
+                //entity.HasOne(d => d.Tratamiento)
+                //    .WithMany(p => p.Tbammaeganados)
+                //    .HasForeignKey(d => d.TratamientoId);
             });
 
             modelBuilder.Entity<Tbammaenotificacion>(entity =>
@@ -642,6 +644,8 @@ namespace PastoreoCACSC_API.Models
             modelBuilder.Entity<SuministrosReport>().HasNoKey();
             modelBuilder.Entity<ApartamentosReport>().HasNoKey();
             modelBuilder.Entity<GanadoSearchResult>().HasNoKey();
+            modelBuilder.Entity<GanadoUpdateRequest>().HasNoKey();
+            modelBuilder.Entity<GanadoCreateRequest>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }

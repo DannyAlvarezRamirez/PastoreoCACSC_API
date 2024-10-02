@@ -28,9 +28,9 @@ namespace PastoreoCACSC_API.Controllers
                 switch (request.RegisterType.ToLower())
                 {
                     case "ganado":
-                        var ganado = _context.SpamselReporteGanado
+                        var ganado = _context.SpamslReporteGanado
                         .FromSqlInterpolated(
-                            $"EXEC dbo.SPAMSELReporte @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
+                            $"EXEC dbo.SPAMSLReporte @TipoRegistro = {request.RegisterType}, @TipoReporte = {request.ReportType}, @StartDate = {request.StartDate}, @EndDate = {request.EndDate ?? DateTime.Now}"
                         )
                         .ToList(); 
 

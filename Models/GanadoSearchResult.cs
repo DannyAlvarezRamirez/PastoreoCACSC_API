@@ -2,6 +2,7 @@
 {
     public class GanadoSearchResult
     {
+        public decimal GanadoId { get; set; }
         public decimal RazaId { get; set; }
         public decimal? Peso { get; set; }
         public DateTime FechaNacimiento { get; set; }
