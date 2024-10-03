@@ -158,7 +158,7 @@ namespace PastoreoCACSC_API.Controllers
             return Ok(response);
         }
 
-        // GET: api/Suministros/dropdownsSuministros
+        // GET: api/Suministros/dropdownsSuministros 
         [HttpGet("dropdownsSuministros")]
         public IActionResult GetDropdownOptions()
         {
