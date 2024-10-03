@@ -33,6 +33,7 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<Tbamdetrole> Tbamdetroles { get; set; } = null!;
         public virtual DbSet<Tbamdetsexo> Tbamdetsexos { get; set; } = null!;
         public virtual DbSet<TbamdettipoPasto> TbamdettipoPastos { get; set; } = null!;
+        public virtual DbSet<TbamdettipoSuministro> TbamdettipoSuministros { get; set; } = null!;
         public virtual DbSet<TbamdettipoTierra> TbamdettipoTierras { get; set; } = null!;
         public virtual DbSet<Tbamdettratamiento> Tbamdettratamientos { get; set; } = null!;
         public virtual DbSet<Tbammaeapartamento> Tbammaeapartamentos { get; set; } = null!;
@@ -49,6 +50,12 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<GanadoSearchResult> SpamslGanado { get; set; } // Mapping the stored procedure
         public virtual DbSet<GanadoUpdateRequest> SpamupGanado { get; set; } // Mapping the stored procedure
         public virtual DbSet<GanadoCreateRequest> SpaminGanado { get; set; } // Mapping the stored procedure
+        public virtual DbSet<ApartamentosSearchResult> SpamslApartamentos { get; set; } // Mapping the stored procedure
+        public virtual DbSet<ApartamentosUpdateRequest> SpamupApartamentos { get; set; } // Mapping the stored procedure
+        public virtual DbSet<ApartamentosCreateRequest> SpaminApartamentos { get; set; } // Mapping the stored procedure
+        public virtual DbSet<SuministrosSearchResult> SpamslSuministros { get; set; } // Mapping the stored procedure
+        public virtual DbSet<SuministrosUpdateRequest> SpamupSuministros { get; set; } // Mapping the stored procedure
+        public virtual DbSet<SuministrosCreateRequest> SpaminSuministros { get; set; } // Mapping the stored procedure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -144,10 +151,10 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoConsumible).HasMaxLength(100);
 
-                entity.HasOne(d => d.Suministro)
-                    .WithMany(p => p.Tbamdetconsumibles)
-                    .HasForeignKey(d => d.SuministroId)
-                    .HasConstraintName("FK__TBAMDETCo__Sumin__1E6F845E");
+                //entity.HasOne(d => d.Suministro)
+                //    .WithMany(p => p.Tbamdetconsumibles)
+                //    .HasForeignKey(d => d.Id)
+                //    .HasConstraintName("FK__TBAMDETCo__Sumin__1E6F845E");
             });
 
             modelBuilder.Entity<Tbamdetdrenaje>(entity =>
@@ -179,10 +186,10 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoEquipo).HasMaxLength(100);
 
-                entity.HasOne(d => d.Suministro)
-                    .WithMany(p => p.Tbamdetequipos)
-                    .HasForeignKey(d => d.SuministroId)
-                    .HasConstraintName("FK__TBAMDETEq__Sumin__214BF109");
+                //entity.HasOne(d => d.Suministro)
+                //    .WithMany(p => p.Tbamdetequipos)
+                //    .HasForeignKey(d => d.SuministroId)
+                //    .HasConstraintName("FK__TBAMDETEq__Sumin__214BF109");
             });
 
             modelBuilder.Entity<TbamdetestadoSalud>(entity =>
@@ -254,10 +261,10 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoQuimico).HasMaxLength(100);
 
-                entity.HasOne(d => d.Suministro)
-                    .WithMany(p => p.Tbamdetquimicos)
-                    .HasForeignKey(d => d.SuministroId)
-                    .HasConstraintName("FK__TBAMDETQu__Sumin__24285DB4");
+                //entity.HasOne(d => d.Suministro)
+                //    .WithMany(p => p.Tbamdetquimicos)
+                //    .HasForeignKey(d => d.SuministroId)
+                //    .HasConstraintName("FK__TBAMDETQu__Sumin__24285DB4");
             });
 
             modelBuilder.Entity<Tbamdetraza>(entity =>
@@ -289,10 +296,10 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoRecurso).HasMaxLength(100);
 
-                entity.HasOne(d => d.Suministro)
-                    .WithMany(p => p.Tbamdetrecursos)
-                    .HasForeignKey(d => d.SuministroId)
-                    .HasConstraintName("FK__TBAMDETRe__Sumin__2704CA5F");
+                //entity.HasOne(d => d.Suministro)
+                //    .WithMany(p => p.Tbamdetrecursos)
+                //    .HasForeignKey(d => d.SuministroId)
+                //    .HasConstraintName("FK__TBAMDETRe__Sumin__2704CA5F");
             });
 
             modelBuilder.Entity<Tbamdetrole>(entity =>
@@ -337,6 +344,20 @@ namespace PastoreoCACSC_API.Models
                 entity.Property(e => e.Descripcion).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<TbamdettipoSuministro>(entity =>
+            {
+                entity.HasKey(e => e.TipoSuministroId)
+                    .HasName("PK__TBAMDETT__6C9E6F05D9C45629");
+
+                entity.ToTable("TBAMDETTipoSuministro");
+
+                entity.Property(e => e.TipoSuministroId)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Descripcion).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<TbamdettipoTierra>(entity =>
             {
                 entity.HasKey(e => e.TipoTierraId)
@@ -367,14 +388,14 @@ namespace PastoreoCACSC_API.Models
 
             modelBuilder.Entity<Tbammaeapartamento>(entity =>
             {
-                entity.HasKey(e => e.ApartamentoId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__TBAMCATA__9195254EE4BFBEFC");
 
                 entity.ToTable("TBAMMAEApartamentos");
 
-                entity.HasIndex(e => e.ApartamentoId, "IDX_TBAMDETApartamentos_ApartamentoId");
+                entity.HasIndex(e => e.Id, "IDX_TBAMDETApartamentos_ApartamentoId");
 
-                entity.Property(e => e.ApartamentoId).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.CapaCargaId).HasColumnType("numeric(18, 0)");
 
@@ -394,39 +415,39 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoTierraId).HasColumnType("numeric(18, 0)");
 
-                entity.HasOne(d => d.CapaCarga)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.CapaCargaId);
+                //entity.HasOne(d => d.CapaCarga)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.CapaCargaId);
 
-                entity.HasOne(d => d.Drenaje)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.DrenajeId);
+                //entity.HasOne(d => d.Drenaje)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.DrenajeId);
 
-                entity.HasOne(d => d.ExpoSolar)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.ExpoSolarId);
+                //entity.HasOne(d => d.ExpoSolar)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.ExpoSolarId);
 
-                entity.HasOne(d => d.FrecuenciaUso)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.FrecuenciaUsoId);
+                //entity.HasOne(d => d.FrecuenciaUso)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.FrecuenciaUsoId);
 
-                entity.HasOne(d => d.TipoPasto)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.TipoPastoId);
+                //entity.HasOne(d => d.TipoPasto)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.TipoPastoId);
 
-                entity.HasOne(d => d.TipoTierra)
-                    .WithMany(p => p.Tbammaeapartamentos)
-                    .HasForeignKey(d => d.TipoTierraId);
+                //entity.HasOne(d => d.TipoTierra)
+                //    .WithMany(p => p.Tbammaeapartamentos)
+                //    .HasForeignKey(d => d.TipoTierraId);
             });
 
             modelBuilder.Entity<Tbammaeganado>(entity =>
             {
-                entity.HasKey(e => e.GanadoId)
-                    .HasName("PK__TBAMDETG__A2E8B3B3334826DE");
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__TBAMMAEG__3214EC079312FE95");
 
                 entity.ToTable("TBAMMAEGanado");
 
-                entity.Property(e => e.GanadoId).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.CreadoPor).HasMaxLength(20);
 
@@ -439,6 +460,8 @@ namespace PastoreoCACSC_API.Models
                 entity.Property(e => e.ModificadoPor).HasMaxLength(20);
 
                 entity.Property(e => e.Peso).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Edad).HasColumnType("int");
 
                 entity.Property(e => e.ProductividadId).HasColumnType("numeric(18, 0)");
 
@@ -521,12 +544,12 @@ namespace PastoreoCACSC_API.Models
 
             modelBuilder.Entity<Tbammaesuministro>(entity =>
             {
-                entity.HasKey(e => e.SuministroId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__TBAMMAES__FDCAEC2D9D42FFBC");
 
                 entity.ToTable("TBAMMAESuministros");
 
-                entity.Property(e => e.SuministroId)
+                entity.Property(e => e.Id)
                     .HasColumnType("numeric(18, 0)")
                     .ValueGeneratedOnAdd();
 
@@ -538,7 +561,7 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.ModificadoPor).HasMaxLength(20);
 
-                entity.Property(e => e.TipoSuministro).HasMaxLength(100);
+                entity.Property(e => e.TipoSuministroId).HasColumnType("numeric(18, 0)");
             });
 
             modelBuilder.Entity<Tbammaeusuario>(entity =>
@@ -603,11 +626,11 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.TipoGanado).HasMaxLength(50);
 
-                entity.HasOne(d => d.Apartamento)
-                    .WithMany(p => p.Tbamrelrotacions)
-                    .HasForeignKey(d => d.ApartamentoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TBAMRELRotacion_ApartamentoId");
+                //entity.HasOne(d => d.Apartamento)
+                //    .WithMany(p => p.Tbamrelrotacions)
+                //    .HasForeignKey(d => d.ApartamentoId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_TBAMRELRotacion_ApartamentoId");
             });
 
             modelBuilder.Entity<TbamrelsistUsuario>(entity =>
@@ -646,6 +669,12 @@ namespace PastoreoCACSC_API.Models
             modelBuilder.Entity<GanadoSearchResult>().HasNoKey();
             modelBuilder.Entity<GanadoUpdateRequest>().HasNoKey();
             modelBuilder.Entity<GanadoCreateRequest>().HasNoKey();
+            modelBuilder.Entity<ApartamentosSearchResult>().HasNoKey();
+            modelBuilder.Entity<ApartamentosUpdateRequest>().HasNoKey();
+            modelBuilder.Entity<ApartamentosCreateRequest>().HasNoKey();
+            modelBuilder.Entity<SuministrosSearchResult>().HasNoKey();
+            modelBuilder.Entity<SuministrosUpdateRequest>().HasNoKey();
+            modelBuilder.Entity<SuministrosCreateRequest>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }

@@ -62,8 +62,8 @@ namespace PastoreoCACSC_API.Controllers
             try
             {
                 // Execute the stored procedure to insert a new Ganado record
-                var ganadoId = _context.Tbammaeganados
-                    .FromSqlInterpolated($@"
+                var id = _context.Database
+                    .ExecuteSqlInterpolated($@"
                         EXEC dbo.SPAMINGanado 
                             @RazaId = {newGanado.RazaId},
                             @Peso = {newGanado.Peso},
@@ -75,20 +75,10 @@ namespace PastoreoCACSC_API.Controllers
                             @TratamientoId = {newGanado.TratamientoId},
                             @FechaNacimiento = {newGanado.FechaNacimiento}, 
                             @CreadoPor = {newGanado.CreadoPor}
-                    ")
-                    .AsEnumerable() // Retrieve the inserted Ganado ID from the result set
-                    .FirstOrDefault()?.GanadoId;
+                    ");
 
-                // Check if the Ganado was successfully created
-                if (ganadoId != null)
-                {
-                    response.SetResponse(true, ExitCode.Success, "Ganado created successfully.");
-                    response.Data.Add(new { GanadoId = ganadoId });
-                }
-                else
-                {
-                    response.SetResponse(false, ExitCode.ErrorServer, "Error creating Ganado.");
-                }
+                // Set success response after the update
+                response.SetResponse(true, ExitCode.Success, "Ganado created successfully.");
             }
             catch (Exception ex)
             {
@@ -110,7 +100,7 @@ namespace PastoreoCACSC_API.Controllers
             try
             {
                 // Check if the Ganado exists before attempting to update
-                var ganadoExists = _context.Tbammaeganados.Any(g => g.GanadoId == id);
+                var ganadoExists = _context.Tbammaeganados.Any(g => g.Id == id);
                 if (!ganadoExists)
                 {
                     response.SetResponse(false, ExitCode.ErrorNotFound, "Ganado not found.");
@@ -120,7 +110,7 @@ namespace PastoreoCACSC_API.Controllers
                 // Execute the stored procedure to update the Ganado record
                 _context.Database.ExecuteSqlInterpolated($@"
                     EXEC dbo.SPAMUPGanado 
-                        @GanadoId = {id},
+                        @Id = {id},
                         @RazaId = {updatedGanado.RazaId}, 
                         @Peso = {updatedGanado.Peso}, 
                         @SexoId = {updatedGanado.SexoId}, 
@@ -155,7 +145,7 @@ namespace PastoreoCACSC_API.Controllers
             try
             {
                 // Check if the Ganado exists before attempting to delete
-                var ganadoExists = _context.Tbammaeganados.Any(g => g.GanadoId == id);
+                var ganadoExists = _context.Tbammaeganados.Any(g => g.Id == id);
                 if (!ganadoExists)
                 {
                     response.SetResponse(false, ExitCode.ErrorNotFound, "Ganado not found.");
@@ -164,7 +154,7 @@ namespace PastoreoCACSC_API.Controllers
 
                 // Execute the stored procedure to delete the Ganado
                 _context.Database.ExecuteSqlInterpolated($@"
-                    EXEC dbo.SPAMDLGanado @GanadoId = {id}
+                    EXEC dbo.SPAMDLGanado @Id = {id}
                 ");
 
                 // Set the success response after deletion

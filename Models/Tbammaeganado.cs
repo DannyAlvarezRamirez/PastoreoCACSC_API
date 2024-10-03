@@ -5,7 +5,7 @@ namespace PastoreoCACSC_API.Models
 {
     public partial class Tbammaeganado
     {
-        public decimal? GanadoId { get; set; }
+        public decimal? Id { get; set; }
         public decimal? RazaId { get; set; }
         public decimal? Peso { get; set; }
         public decimal? SexoId { get; set; }
@@ -15,7 +15,7 @@ namespace PastoreoCACSC_API.Models
         public decimal? ProductividadId { get; set; }
         public decimal? TratamientoId { get; set; }
         public DateTime? FechaNacimiento { get; set; }
-        public string? CreadoPor { get; set; } = null!;
+        public string? CreadoPor { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public string? ModificadoPor { get; set; }
         public DateTime? FechaModif { get; set; }

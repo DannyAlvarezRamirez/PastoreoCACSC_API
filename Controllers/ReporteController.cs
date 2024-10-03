@@ -36,7 +36,7 @@ namespace PastoreoCACSC_API.Controllers
 
                         var ganadoList = ganado.Select(g => new GanadoReport
                         {
-                            GanadoId = g.GanadoId,
+                            Id = g.Id,
                             RazaId = g.RazaId,
                             Peso = g.Peso,
                             FechaNacimiento = g.FechaNacimiento,
@@ -79,7 +79,7 @@ namespace PastoreoCACSC_API.Controllers
 
                         var apartamentosList = apartamentos.Select(a => new ApartamentosReport
                         {
-                            ApartamentoId = a.ApartamentoId,
+                            Id = a.Id,
                             TamanoArea = a.TamanoArea,
                             TipoPastoId = a.TipoPastoId,
                             TipoTierraId = a.TipoTierraId,

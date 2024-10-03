@@ -1,6 +1,6 @@
 ﻿namespace PastoreoCACSC_API.Models
 {
-    public class ApartamentosReport
+    public class ApartamentosSearchResult
     {
         public decimal Id { get; set; }
         public decimal? TamanoArea { get; set; }
@@ -10,6 +10,5 @@
         public decimal? ExpoSolarId { get; set; }
         public decimal? CapaCargaId { get; set; }
         public decimal? FrecuenciaUsoId { get; set; }
-        public DateTime FechaCreacion { get; set; }
     }
 }
