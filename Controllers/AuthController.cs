@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
         var response = new ApiResponse();
 
         var user = _context.Tbammaeusuarios.SingleOrDefault(u => u.Username == model.Username);
-        if (user == null || !_passwordService.VerifyPassword(model.Password, user.PasswordHash) || user.Estado == 0)
+        if (user == null || !_passwordService.VerifyPassword(model.Password, user.PasswordHash) || user.AccountStatus == "Inactive" || user.AccountStatus == "Inactivo")
         {
             response.SetResponse(false, ExitCode.ErrorUnauthorized, "Invalid username or password or user is inactive");
             return Ok(response);
@@ -58,7 +58,7 @@ public class AuthController : ControllerBase
         }
 
         // If user is found and active
-        if (user.Estado == 1) // Assuming '1' means active
+        if (user.AccountStatus == "Active" || user.AccountStatus == "Activo") // Assuming '1' means active
         {
             response.Data.Add(new { Username = user.Username });
             response.SetResponse(true, ExitCode.Success, $"Su nombre de usuario es {user.Username}. Redirigiendo a la recuperación de contraseña.");
@@ -66,7 +66,7 @@ public class AuthController : ControllerBase
         }
 
         // If user is found but inactive
-        if (user.Estado == 0) // Assuming '0' means inactive
+        if (user.AccountStatus == "Inactive" || user.AccountStatus == "Inactivo") // Assuming '0' means inactive
         {
             response.Data.Add(new { Username = user.Username, Email = user.Email });
             response.SetResponse(false, ExitCode.ErrorUnauthorized, "El usuario está inactivo. Contacte a soporte.");

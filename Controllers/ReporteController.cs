@@ -64,7 +64,7 @@ namespace PastoreoCACSC_API.Controllers
                             SuministroId = s.SuministroId,
                             Cantidad = s.Cantidad,
                             Descripcion = s.Descripcion,
-                            TipoSuministro = s.TipoSuministro,
+                            TipoSuministroId = s.TipoSuministroId,
                             FechaCreacion = s.FechaCreacion
                         }).ToList();
 

@@ -167,8 +167,8 @@ namespace PastoreoCACSC_API.Controllers
             try
             {
                 // Assuming there are lookup tables or hardcoded values for dropdowns
-                var tiposSuministro = _context.TbamdettipoSuministros
-                    .Select(ts => new { ts.TipoSuministroId, ts.Descripcion })
+                var tiposSuministro = _context.TbamdettipoSuministro
+                    .Select(ts => new { ts.Id, ts.Descripcion })
                     .ToList();
 
                 response.Data.Add(new

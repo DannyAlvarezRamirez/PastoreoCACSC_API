@@ -187,11 +187,11 @@ namespace PastoreoCACSC_API.Controllers
                     .Select(d => new { d.DrenajeId, d.Descripcion })
                     .ToList();
 
-                var exposicionesSolar = _context.TbamdetexpoSolars
+                var exposSolar = _context.TbamdetexpoSolars
                     .Select(es => new { es.ExpoSolarId, es.Descripcion })
                     .ToList();
 
-                var capacidadesCarga = _context.TbamdetcapaCargas
+                var capasCarga = _context.TbamdetcapaCargas
                     .Select(cc => new { cc.CapaCargaId, cc.Descripcion })
                     .ToList();
 
@@ -204,8 +204,8 @@ namespace PastoreoCACSC_API.Controllers
                     TiposPasto = tiposPasto,
                     TiposTierra = tiposTierra,
                     Drenajes = drenajes,
-                    ExposicionesSolar = exposicionesSolar,
-                    CapacidadesCarga = capacidadesCarga,
+                    ExposSolar = exposSolar,
+                    CapasCarga = capasCarga,
                     FrecuenciasUso = frecuenciasUso
                 });
 

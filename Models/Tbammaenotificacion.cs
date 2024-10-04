@@ -16,6 +16,6 @@ namespace PastoreoCACSC_API.Models
         public string? ModificadoPor { get; set; }
         public DateTime? FechaModif { get; set; }
 
-        public virtual Tbammaeusuario Usuario { get; set; } = null!;
+        //public virtual Tbammaeusuario Usuario { get; set; } = null!;
     }
 }

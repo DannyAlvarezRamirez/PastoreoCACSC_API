@@ -10,6 +10,6 @@ namespace PastoreoCACSC_API.Models
         public string TipoAlerta { get; set; } = null!;
         public string Configuracion { get; set; } = null!;
 
-        public virtual Tbammaeusuario Usuario { get; set; } = null!;
+        //public virtual Tbammaeusuario Usuario { get; set; } = null!;
     }
 }
