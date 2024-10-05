@@ -28,7 +28,7 @@ namespace PastoreoCACSC_API.Controllers
                 // Execute the stored procedure with the provided filters 
                 var apartamentosList = _context.SpamslApartamentos
                     .FromSqlInterpolated(
-                        $"EXEC dbo.SPAMSLApartamentos @TamanoArea = {filters.TamanoArea}, @TipoPastoId = {filters.TipoPastoId}, @TipoTierraId = {filters.TipoTierraId}, @DrenajeId = {filters.DrenajeId}, @ExpoSolarId = {filters.ExpoSolarId}, @CapaCargaId = {filters.CapaCargaId}, @FrecuenciaUsoId = {filters.FrecuenciaUsoId}"
+                        $"EXEC dbo.SPAMSLApartamentos @TamanoArea = {filters.TamanoArea}, @Descripcion = {filters.Descripcion}, @TipoPastoId = {filters.TipoPastoId}, @TipoTierraId = {filters.TipoTierraId}, @DrenajeId = {filters.DrenajeId}, @ExpoSolarId = {filters.ExpoSolarId}, @CapaCargaId = {filters.CapaCargaId}, @FrecuenciaUsoId = {filters.FrecuenciaUsoId}"
                     )
                     .ToList();
 
@@ -66,6 +66,7 @@ namespace PastoreoCACSC_API.Controllers
                     .ExecuteSqlInterpolated($@"
                         EXEC dbo.SPAMINApartamentos 
                             @TamanoArea = {newApartamento.TamanoArea},
+                            @Descripcion = {newApartamento.Descripcion},
                             @TipoPastoId = {newApartamento.TipoPastoId},
                             @TipoTierraId = {newApartamento.TipoTierraId},
                             @DrenajeId = {newApartamento.DrenajeId},
@@ -109,7 +110,8 @@ namespace PastoreoCACSC_API.Controllers
                 _context.Database.ExecuteSqlInterpolated($@"
                     EXEC dbo.SPAMUPApartamentos 
                         @Id = {id},
-                        @TamanoArea = {updatedApartamento.TamanoArea}, 
+                        @TamanoArea = {updatedApartamento.TamanoArea},
+                        @Descripcion = {updatedApartamento.Descripcion}, 
                         @TipoPastoId = {updatedApartamento.TipoPastoId}, 
                         @TipoTierraId = {updatedApartamento.TipoTierraId}, 
                         @DrenajeId = {updatedApartamento.DrenajeId}, 

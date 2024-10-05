@@ -33,6 +33,7 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<Tbamdetrole> Tbamdetroles { get; set; } = null!;
         public virtual DbSet<Tbamdetsexo> Tbamdetsexos { get; set; } = null!;
         public virtual DbSet<TbamdettipoPasto> TbamdettipoPastos { get; set; } = null!;
+        public virtual DbSet<TbamcattipoGanado> TbamcattipoGanado { get; set; } = null!;
         public virtual DbSet<TbamdettipoSuministro> TbamdettipoSuministro { get; set; } = null!;
         public virtual DbSet<TbamdettipoTierra> TbamdettipoTierras { get; set; } = null!;
         public virtual DbSet<Tbamdettratamiento> Tbamdettratamientos { get; set; } = null!;
@@ -43,6 +44,7 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<Tbammaesuministro> Tbammaesuministros { get; set; } = null!;
         public virtual DbSet<Tbammaeusuario> Tbammaeusuarios { get; set; } = null!;
         public virtual DbSet<Tbamrelrotacion> Tbamrelrotacions { get; set; } = null!;
+        public virtual DbSet<TbamrelnotifUsu> TbamrelnotifUsus { get; set; } = null!;
         public virtual DbSet<GanadoReport> SpamslReporteGanado { get; set; } // Mapping the stored procedure
         public virtual DbSet<SuministrosReport> SpamselReporteSuministros { get; set; } // Mapping the stored procedure
         public virtual DbSet<ApartamentosReport> SpamselReporteApartamentos { get; set; } // Mapping the stored procedure
@@ -58,6 +60,13 @@ namespace PastoreoCACSC_API.Models
         public virtual DbSet<UserSearchResult> SpamslUsuarios { get; set; } // Mapping the stored procedure
         public virtual DbSet<UserUpdateRequest> SpamupUsuarios { get; set; } // Mapping the stored procedure
         public virtual DbSet<UserCreateRequest> SpaminUsuarios { get; set; } // Mapping the stored procedure
+        public virtual DbSet<RotacionSearchResult> SpamslRotacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<RotacionUpdateRequest> SpamupRotacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<RotacionCreateRequest> SpaminRotacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<NotificacionSearchResult> SpamslNotificacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<NotificacionUpdateRequest> SpamupNotificacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<NotificacionCreateRequest> SpaminNotificacion { get; set; } // Mapping the stored procedure
+        public virtual DbSet<NotificacionResult> NotificacionResult { get; set; } // Mapping the stored procedure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -332,6 +341,20 @@ namespace PastoreoCACSC_API.Models
                 entity.Property(e => e.Descripcion).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<TbamcattipoGanado>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__TBAMDETT__6C9E6F05D9C45629");
+
+                entity.ToTable("TBAMCATTipoGanado");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Descripcion).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<TbamdettipoPasto>(entity =>
             {
                 entity.HasKey(e => e.TipoPastoId)
@@ -496,12 +519,12 @@ namespace PastoreoCACSC_API.Models
 
             modelBuilder.Entity<Tbammaenotificacion>(entity =>
             {
-                entity.HasKey(e => e.NotificacionId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__TBAMMAEN__BCC120243F548C7E");
 
                 entity.ToTable("TBAMMAENotificacion");
 
-                entity.Property(e => e.NotificacionId).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.CreadoPor).HasMaxLength(20);
 
@@ -509,9 +532,7 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.Prioridad).HasMaxLength(20);
 
-                entity.Property(e => e.TipoNotificacion).HasMaxLength(100);
-
-                entity.Property(e => e.UsuarioId).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.Suscripcion).HasMaxLength(20);
 
                 //entity.HasOne(d => d.Usuario)
                 //    .WithMany(p => p.Tbammaenotificacions)
@@ -568,6 +589,9 @@ namespace PastoreoCACSC_API.Models
 
             modelBuilder.Entity<Tbammaeusuario>(entity =>
             {
+                entity.HasKey(e => e.Id)
+                    .HasName("PK_TBCMMAEUsuarios");
+
                 entity.ToTable("TBAMMAEUsuarios");
 
                 entity.HasIndex(e => e.Id, "IDX_TBAMMAEUsuarios_UsuarioId");
@@ -601,12 +625,12 @@ namespace PastoreoCACSC_API.Models
 
             modelBuilder.Entity<Tbamrelrotacion>(entity =>
             {
-                entity.HasKey(e => e.RotacionId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__TBAMRELR__CF4EAADBF64AEE20");
 
                 entity.ToTable("TBAMRELRotacion");
 
-                entity.Property(e => e.RotacionId).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.ApartamentoId).HasColumnType("numeric(18, 0)");
 
@@ -618,13 +642,27 @@ namespace PastoreoCACSC_API.Models
 
                 entity.Property(e => e.Temporada).HasMaxLength(50);
 
-                entity.Property(e => e.TipoGanado).HasMaxLength(50);
+                entity.Property(e => e.TipoGanadoId).HasColumnType("numeric(18, 0)");
 
                 //entity.HasOne(d => d.Apartamento)
                 //    .WithMany(p => p.Tbamrelrotacions)
                 //    .HasForeignKey(d => d.ApartamentoId)
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_TBAMRELRotacion_ApartamentoId");
+            });
+
+            modelBuilder.Entity<TbamrelnotifUsu>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__TBAMRELR__CF4EAADBF64AEE20");
+
+                entity.ToTable("TBAMRELNotifUsu");
+
+                entity.Property(e => e.Id).HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.NotificacionId).HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.UsuarioId).HasColumnType("numeric(18, 0)");
             });
 
             modelBuilder.Entity<GanadoReport>().HasNoKey();
@@ -642,6 +680,13 @@ namespace PastoreoCACSC_API.Models
             modelBuilder.Entity<UserSearchResult>().HasNoKey();
             modelBuilder.Entity<UserUpdateRequest>().HasNoKey();
             modelBuilder.Entity<UserCreateRequest>().HasNoKey();
+            modelBuilder.Entity<RotacionSearchResult>().HasNoKey();
+            modelBuilder.Entity<RotacionUpdateRequest>().HasNoKey();
+            modelBuilder.Entity<RotacionCreateRequest>().HasNoKey();
+            modelBuilder.Entity<NotificacionSearchResult>().HasNoKey();
+            modelBuilder.Entity<NotificacionUpdateRequest>().HasNoKey();
+            modelBuilder.Entity<NotificacionCreateRequest>().HasNoKey();
+            modelBuilder.Entity<NotificacionResult>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }

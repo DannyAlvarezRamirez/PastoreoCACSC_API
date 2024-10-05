@@ -3,6 +3,7 @@
     public class ApartamentosFilterRequest
     {
         public decimal? TamanoArea { get; set; }
+        public string? Descripcion { get; set; }
         public decimal? TipoPastoId { get; set; }
         public decimal? TipoTierraId { get; set; }
         public decimal? DrenajeId { get; set; }

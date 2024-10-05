@@ -5,14 +5,14 @@ namespace PastoreoCACSC_API.Models
 {
     public partial class Tbamrelrotacion
     {
-        public decimal RotacionId { get; set; }
+        public decimal Id { get; set; }
         public decimal ApartamentoId { get; set; }
         public DateTime TiempoInicio { get; set; }
         public DateTime? TiempoFin { get; set; }
         public string? Temporada { get; set; }
-        public int? CantidadGanadoActual { get; set; }
-        public int? CantidadMaximaRecomendada { get; set; }
-        public string? TipoGanado { get; set; }
+        public int? CantGanadoAct { get; set; }
+        public int? CantMaximaRec { get; set; }
+        public decimal? TipoGanadoId { get; set; }
         public string? RegistroEventos { get; set; }
         public decimal? EficPast { get; set; }
         public string? Observaciones { get; set; }
@@ -21,6 +21,6 @@ namespace PastoreoCACSC_API.Models
         public string? ModificadoPor { get; set; }
         public DateTime? FechaModif { get; set; }
 
-        public virtual Tbammaeapartamento Apartamento { get; set; } = null!;
+        //public virtual Tbammaeapartamento Apartamento { get; set; } = null!;
     }
 }
