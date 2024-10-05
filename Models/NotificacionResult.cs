@@ -14,7 +14,7 @@
         public DateTime? FechaCreacion { get; set; } // When the notification was created
 
         // User-Notification relationship
-        public List<UsuarioNotificationDetail>? Usuarios { get; set; } = new List<UsuarioNotificationDetail>();
+        public List<UsuarioNotificationDetail>? Usuarios { get; set; } = new List<UsuarioNotificationDetail>(); 
     }
 
     public class UsuarioNotificationDetail
