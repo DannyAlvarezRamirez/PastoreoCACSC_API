@@ -45,7 +45,7 @@ namespace PastoreoCACSC_API.Controllers
             catch (Exception ex)
             {
                 response.SetResponse(false, ExitCode.ErrorServer, "Error recuperando las notificaciones.", ex.Message);
-                return StatusCode(500, response);
+                return StatusCode(500, response); 
             }
 
             return Ok(response);
