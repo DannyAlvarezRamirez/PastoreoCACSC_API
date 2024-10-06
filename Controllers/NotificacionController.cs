@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using PastoreoCACSC_API.Models;
 using PastoreoCACSC_API.Classes;
+using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace PastoreoCACSC_API.Controllers
 {
@@ -57,22 +59,44 @@ namespace PastoreoCACSC_API.Controllers
 
             try
             {
-                // Convert the list of user IDs to a comma-separated string
-                var usuarioIds = string.Empty; // string.Join(",", newNotificacion.UsuarioIds);
+                // Convert the list of user IDs to a DataTable for the TVP
+                var usuarioIdsTable = new DataTable();
+                usuarioIdsTable.Columns.Add("UsuarioId", typeof(int));
+
+                // Add values to the table
+                if (newNotificacion.UsuarioIds != null)
+                {
+                    foreach (var usuarioDetail in newNotificacion.UsuarioIds)
+                    {
+                        if (usuarioDetail.UsuarioId.HasValue) // Ensure UsuarioId is not null
+                        {
+                            usuarioIdsTable.Rows.Add((int)usuarioDetail.UsuarioId.Value);
+                        }
+                    }
+                }
+
+                // Define parameters including the table-valued parameter for UsuarioIds
+                var parameters = new[]
+                {
+                    new SqlParameter("@De", SqlDbType.NVarChar) { Value = newNotificacion.De },
+                    new SqlParameter("@Asunto", SqlDbType.NVarChar) { Value = newNotificacion.Asunto },
+                    new SqlParameter("@Mensaje", SqlDbType.NVarChar) { Value = newNotificacion.Mensaje },
+                    new SqlParameter("@FechaCreacion", SqlDbType.DateTime2) { Value = newNotificacion.FechaCreacion ?? DateTime.Now },
+                    new SqlParameter("@AlertConfig", SqlDbType.NVarChar) { Value = newNotificacion.AlertConfig },
+                    new SqlParameter("@Prioridad", SqlDbType.NVarChar) { Value = newNotificacion.Prioridad },
+                    new SqlParameter("@Suscripcion", SqlDbType.NVarChar) { Value = newNotificacion.Suscripcion },
+                    new SqlParameter("@CreadoPor", SqlDbType.NVarChar) { Value = newNotificacion.CreadoPor },
+                    new SqlParameter
+                    {
+                        ParameterName = "@UsuarioIds",
+                        SqlDbType = SqlDbType.Structured,
+                        TypeName = "dbo.UsuarioIdTable",  // Use the table-valued parameter type
+                        Value = usuarioIdsTable
+                    }
+                };
 
                 // Execute the stored procedure to insert the notification and its recipients
-                _context.Database.ExecuteSqlInterpolated($@"
-                    EXEC dbo.SPAMINNotificacion 
-                        @De = {newNotificacion.De},
-                        @Asunto = {newNotificacion.Asunto},
-                        @Mensaje = {newNotificacion.Mensaje},
-                        @FechaCreacion = {newNotificacion.FechaCreacion},
-                        @AlertConfig = {newNotificacion.AlertConfig},
-                        @Prioridad = {newNotificacion.Prioridad},
-                        @Suscripcion = {newNotificacion.Suscripcion},
-                        @CreadoPor = {newNotificacion.CreadoPor},
-                        @UsuarioIds = {usuarioIds}
-                ");
+                _context.Database.ExecuteSqlRaw("EXEC SPAMINNotificacion @De, @Asunto, @Mensaje, @FechaCreacion, @AlertConfig, @Prioridad, @Suscripcion, @CreadoPor, @UsuarioIds", parameters);
 
                 // Set success response after the insert operation
                 response.SetResponse(true, ExitCode.Success, "Notificación creada exitosamente.");
@@ -103,23 +127,60 @@ namespace PastoreoCACSC_API.Controllers
                     return NotFound(response);
                 }
 
-                // Convert the list of user IDs to a comma-separated string
-                var usuarioIds = string.Empty; //string.Join(",", updatedNotificacion.UsuarioIds);
+                var usuarioIdsTable = new DataTable();
+                usuarioIdsTable.Columns.Add("UsuarioId", typeof(int));
 
-                // Execute the stored procedure to update the notification and its related users
-                _context.Database.ExecuteSqlInterpolated($@"
-            EXEC dbo.SPAMUPNotificacion 
-                @Id = {id},
-                @De = {updatedNotificacion.De},
-                @Asunto = {updatedNotificacion.Asunto},
-                @Mensaje = {updatedNotificacion.Mensaje},
-                @FechaModif = {updatedNotificacion.FechaModif},
-                @AlertConfig = {updatedNotificacion.AlertConfig},
-                @Prioridad = {updatedNotificacion.Prioridad},
-                @Suscripcion = {updatedNotificacion.Suscripcion},
-                @ModificadoPor = {updatedNotificacion.ModificadoPor},
-                @UsuarioIds = {usuarioIds}
-        ");
+                // Add values to the table
+                if (updatedNotificacion.UsuarioIds != null)
+                {
+                    foreach (var usuarioDetail in updatedNotificacion.UsuarioIds)
+                    {
+                        if (usuarioDetail.UsuarioId.HasValue) // Ensure UsuarioId is not null
+                        {
+                            usuarioIdsTable.Rows.Add((int)usuarioDetail.UsuarioId.Value);
+                        }
+                    }
+                }
+
+                // Pass the table-valued parameter
+                var parameters = new[]
+                {
+                    new SqlParameter("@Id", SqlDbType.Decimal) { Value = id },
+                    new SqlParameter("@De", SqlDbType.NVarChar) { Value = updatedNotificacion.De },
+                    new SqlParameter("@Asunto", SqlDbType.NVarChar) { Value = updatedNotificacion.Asunto },
+                    new SqlParameter("@Mensaje", SqlDbType.NVarChar) { Value = updatedNotificacion.Mensaje },
+                    new SqlParameter("@FechaModif", SqlDbType.DateTime2) { Value = updatedNotificacion.FechaModif ?? DateTime.Now },
+                    new SqlParameter("@AlertConfig", SqlDbType.NVarChar) { Value = updatedNotificacion.AlertConfig },
+                    new SqlParameter("@Prioridad", SqlDbType.NVarChar) { Value = updatedNotificacion.Prioridad },
+                    new SqlParameter("@Suscripcion", SqlDbType.NVarChar) { Value = updatedNotificacion.Suscripcion },
+                    new SqlParameter("@ModificadoPor", SqlDbType.NVarChar) { Value = updatedNotificacion.ModificadoPor },
+                    new SqlParameter
+                    {
+                        ParameterName = "@UsuarioIds",
+                        SqlDbType = SqlDbType.Structured,
+                        TypeName = "dbo.UsuarioIdTable",
+                        Value = usuarioIdsTable
+                    }
+                };
+
+                // Execute the stored procedure
+                _context.Database.ExecuteSqlRaw("EXEC SPAMUPNotificacion @Id, @De, @Asunto, @Mensaje, @FechaModif, @AlertConfig, @Prioridad, @Suscripcion, @ModificadoPor, @UsuarioIds", parameters);
+
+                // Retrieve the updated notification details
+                var updatedNotification = _context.Tbammaenotificacions.FirstOrDefault(n => n.Id == id);
+
+                // Manually retrieve the related users
+                var relatedUsers = _context.TbamrelnotifUsus
+                    .Where(nu => nu.NotificacionId == id)
+                    .Select(nu => nu.UsuarioId)
+                    .ToList();
+
+                // Add both notification and related users to the response
+                response.Data.Add(new
+                {
+                    UpdatedNotification = updatedNotification,
+                    RelatedUsers = relatedUsers
+                });
 
                 // Set success response after updating
                 response.SetResponse(true, ExitCode.Success, "Notificación actualizada exitosamente.");

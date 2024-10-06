@@ -3,6 +3,8 @@
     public class NotificacionResult
     {
         public decimal Id { get; set; }          // The unique ID of the notification
+        public decimal? UsuarioId { get; set; }          // The unique ID of the notification
+        public string? UsuarioNombre { get; set; }          // The unique ID of the notification
         public string? De { get; set; }           // Who sent the notification (e.g., Admin)
         public string? Asunto { get; set; }       // The subject of the notification
         public string? Mensaje { get; set; }      // The body of the message
@@ -20,6 +22,6 @@
     public class UsuarioNotificationDetail
     {
         public decimal? UsuarioId { get; set; }   // The unique ID of the user
-        public string? Username { get; set; }     // The username of the user receiving the notification
+        //public string? Username { get; set; }     // The username of the user receiving the notification
     }
 }

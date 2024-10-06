@@ -10,8 +10,10 @@
         public string? Prioridad { get; set; }  // The priority of the notification (e.g., "alta", "media", "baja")
         public string? Suscripcion { get; set; } // Subscription setting (e.g., "encender", "apagar")
         public string? ModificadoPor { get; set; } // Who modified the notification
+        public decimal? UsuarioId { get; set; }          // The unique ID of the notification
+        public string? UsuarioNombre { get; set; }          // The unique ID of the notification
 
         // User-Notification relationship
-        public List<UsuarioNotificationDetail>? Usuarios { get; set; } = new List<UsuarioNotificationDetail>();
+        public List<UsuarioNotificationDetail>? UsuarioIds { get; set; } = new List<UsuarioNotificationDetail>();
     }
 }

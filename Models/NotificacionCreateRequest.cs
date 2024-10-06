@@ -13,6 +13,6 @@
         public string? CreadoPor { get; set; }  // Who created the notification
 
         // User-Notification relationship
-        public List<UsuarioNotificationDetail>? Usuarios { get; set; } = new List<UsuarioNotificationDetail>();
+        public List<UsuarioNotificationDetail>? UsuarioIds { get; set; } = new List<UsuarioNotificationDetail>();
     }
 }
